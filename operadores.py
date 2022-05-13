@@ -33,6 +33,9 @@ OPER_ATRIBUICAO     = "="
 ABRE_PARENTESES     = "(" 
 FECHA_PARENTESES    = ")" 
 
+ABRE_COLCHETES      = "["
+FECHA_COLCHETES      = "]"
+
 
 # dicionário com o nome das categorias
 DESCRICAO = {
@@ -50,5 +53,8 @@ DESCRICAO = {
 
     # parenteses: para expressões infixas */
     ABRE_PARENTESES:   "abre parenteses", 
-    FECHA_PARENTESES:  "fecha parenteses", 
+    FECHA_PARENTESES:  "fecha parenteses",
+
+    ABRE_COLCHETES:    "abre colchetes",
+    FECHA_COLCHETES:   "fecha colchetes",
 }

@@ -20,11 +20,15 @@ LETRAS  = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 # abre e fecha parenteses
 ABRE_FECHA_PARENTESES = "()"
 
+# abre e fecha colchetes
+ABRE_FECHA_COLCHETES = "[]"
+
 # categorias
 OPERADOR   = 1 # para operadores aritméticos e atribuição
 NUMERO     = 2 # para números: todos são considerados float
 VARIAVEL   = 3 # para variáveis
 PARENTESES = 4 # para '(' e ')
+COLCHETES  = 5 # para '[' e ']'
 
 # Whitespace characters: space, newline, horizontal tab,
 # vertical tab, form feed, carriage return
@@ -78,6 +82,9 @@ def tokeniza(exp):
         
         elif exp[indice] in ABRE_FECHA_PARENTESES:
             lista_tokens.append([exp[indice], PARENTESES])
+
+        elif exp[indice] in ABRE_FECHA_COLCHETES:
+            lista_tokens.append([exp[indice], COLCHETES])
 
         elif exp[indice] in DIGITOS:
             while indice < len(exp):

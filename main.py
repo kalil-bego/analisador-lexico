@@ -33,7 +33,7 @@ def main():
             item, tipo = token
 
             # cri string com a descriçao
-            if tipo in [tk.OPERADOR, tk.PARENTESES]:
+            if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
                 descricao = "'%s' : %s" %(item,op.DESCRICAO[item])
             elif tipo == tk.VARIAVEL:
                 descricao = "'%s' : nome de variável" %item
