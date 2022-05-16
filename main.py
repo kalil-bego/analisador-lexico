@@ -4,52 +4,92 @@
    Este arquivo contem o programa principal do projeto.
 '''
 
-# tk.tokeniza(), 
+# tk.tokeniza(),
 import tokeniza as tk
 
-# categorias e dicionario "categoria: decrição" 
+# categorias e dicionario "categoria: decrição"
 import operadores as op
 
-PROMPT = "expressão >>> "
-QUIT   = ''
+import readFile as rf
 
-#------------------------------------------------------------
+PROMPT = "\nopcao >>> "
+PROMPT2 = "\npath >>> "
+PROMPT3 = "\nexpressão >>> "
+QUIT = '3'
+
+# ------------------------------------------------------------
+
+
 def main():
     '''None -> None
 
-    Programa que lê do teclado uma expressão aritmética 
+    Programa que lê do teclado uma expressão aritmética
     e imprime cada item léxico na expressão.
 
     Exemplos:
 
-    
+
     '''
-    print("Entre como uma expressão ou tecle apenas ENTER para encerrar.") 
-    expressao = input(PROMPT)
-    while expressao != QUIT:
-        lista_tokens = tk.tokeniza(expressao)
-        for token in lista_tokens:
-            # pegue item e tipo
-            item, tipo = token
+    opcao = 0
 
-            # cri string com a descriçao
-            if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
-                descricao = "'%s' : %s" %(item,op.DESCRICAO[item])
-            elif tipo == tk.VARIAVEL:
-                descricao = "'%s' : nome de variável" %item
-            elif tipo == tk.NUMERO:
-                descricao = "%f : constante float" %item
-            else:
-                descricao = "'%s' : categoria desconhecida" %item
+    while opcao != QUIT:
+        opcoes = ["\n1. Expressão a partir de arquivo",
+                  "2. Escrever expressão", "3. Sair"]
+        print("\nSelecione uma opção:\n" + '\n'.join(str(o) for o in opcoes))
+        opcao = input(PROMPT).strip()
 
-            # imprima a descriçao
-            print(descricao)
+        if opcao == '1':
+            print("\nEntre com o path do arquivo")
+            path = input(PROMPT2)
+            arquivo = rf.lerArquivo(path)
 
-        # leia próxima expressão    
-        expressao = input(PROMPT)        
+            for linha in arquivo:
+                lista_tokens = tk.tokeniza(linha)
+
+                for token in lista_tokens:
+                    # pegue item e tipo
+                    item, tipo = token
+
+                    # cri string com a descriçao
+                    if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
+                        descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
+                    elif tipo == tk.VARIAVEL:
+                        descricao = "'%s' : nome de variável" % item
+                    elif tipo == tk.NUMERO:
+                        descricao = "%f : constante float" % item
+                    else:
+                        descricao = "'%s' : categoria desconhecida" % item
+
+                    # imprima a descriçao
+                    print(descricao)
+        elif opcao == '2':
+            print("\nEntre como uma expressão")
+            expressao = input(PROMPT3)
+            lista_tokens = tk.tokeniza(expressao)
+
+            for token in lista_tokens:
+                # pegue item e tipo
+                item, tipo = token
+
+                # cri string com a descriçao
+                if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
+                    descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
+                elif tipo == tk.VARIAVEL:
+                    descricao = "'%s' : nome de variável" % item
+                elif tipo == tk.NUMERO:
+                    descricao = "%f : constante float" % item
+                else:
+                    descricao = "'%s' : categoria desconhecida" % item
+
+                # imprima a descriçao
+                print(descricao)
+        elif opcao == '3':
+            pass
+        else:
+            opcao = input(
+                "Opção inválida, por favor selecione uma opção válida:\n" + PROMPT).strip()
 
 
-#-------------------------------------------
+# -------------------------------------------
 # início da execução do programa
 main()
-        
