@@ -81,6 +81,8 @@ def tokeniza(exp):
     indice = 0
     string_atual = ''
     float_atual = ''
+    start_index_string = 0
+    end_index_string = 0
     while indice < len(exp):
 
         if exp[indice] in COMENTARIO:
@@ -106,20 +108,28 @@ def tokeniza(exp):
             if len(float_atual) > 0:
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
-        
-        elif exp[indice] in LETRAS or exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA or exp[indice] in BRANCOS:
+
+        elif exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA or exp[indice]:
+            if start_index_string is 0:
+                start_index_string = indice
+            if end_index_string is 0:
+                end_index_string = indice
+                string_atual = exp[start_index_string:end_index_string]
+            
+            if len(string_atual) > 0:
+                lista_tokens.append([string_atual, STRING])
+                string_atual = ''
+                break
+
+        elif exp[indice] in LETRAS or exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA or exp[indice]:
             while indice < len(exp):
-                if exp[indice] in DIGITOS or exp[indice] in LETRAS or exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
+                if exp[indice] in DIGITOS or exp[indice] in LETRAS:
                     string_atual += exp[indice]
                     indice += 1
                 else:
                     break
 
             if len(string_atual) > 0:
-                if string_atual.startswith(ASPAS_SIMPLES) or string_atual.startswith(ASPAS_DUPLA) and string_atual.endswith(ASPAS_DUPLA) or string_atual.endswith(ASPAS_SIMPLES):
-                    lista_tokens.append([string_atual, STRING])
-                    string_atual = ''
-                    break
                 lista_tokens.append([string_atual, VARIAVEL])
                 string_atual = ''
 
