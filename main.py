@@ -74,6 +74,8 @@ def main():
                     descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
                 elif tipo == tk.VARIAVEL:
                     descricao = "'%s' : nome de variável" % item
+                elif tipo == tk.STRING:
+                    descricao = "'%s' : string" % item
                 elif tipo == tk.NUMERO:
                     descricao = "%f : constante float" % item
                 else:

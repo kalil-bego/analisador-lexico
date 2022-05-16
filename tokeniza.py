@@ -1,5 +1,9 @@
 
 # Constantes
+from lib2to3.pgen2.token import STRING
+import token
+
+
 TESTE   = False
 
 # caracteres usados em operadores
@@ -23,12 +27,17 @@ ABRE_FECHA_PARENTESES = "()"
 # abre e fecha colchetes
 ABRE_FECHA_COLCHETES = "[]"
 
+# aspas
+ASPAS_DUPLA = '"'
+ASPAS_SIMPLES = "'"
+
 # categorias
 OPERADOR   = 1 # para operadores aritméticos e atribuição
 NUMERO     = 2 # para números: todos são considerados float
 VARIAVEL   = 3 # para variáveis
 PARENTESES = 4 # para '(' e ')
 COLCHETES  = 5 # para '[' e ']'
+STRING     = 6 # para '"'e "'"
 
 # Whitespace characters: space, newline, horizontal tab,
 # vertical tab, form feed, carriage return
@@ -98,15 +107,19 @@ def tokeniza(exp):
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
         
-        elif exp[indice] in LETRAS:
+        elif exp[indice] in LETRAS or exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA or exp[indice] in BRANCOS:
             while indice < len(exp):
-                if exp[indice] in DIGITOS or exp[indice] in LETRAS:
+                if exp[indice] in DIGITOS or exp[indice] in LETRAS or exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
                     string_atual += exp[indice]
                     indice += 1
                 else:
                     break
 
             if len(string_atual) > 0:
+                if string_atual.startswith(ASPAS_SIMPLES) or string_atual.startswith(ASPAS_DUPLA) and string_atual.endswith(ASPAS_DUPLA) or string_atual.endswith(ASPAS_SIMPLES):
+                    lista_tokens.append([string_atual, STRING])
+                    string_atual = ''
+                    break
                 lista_tokens.append([string_atual, VARIAVEL])
                 string_atual = ''
 
