@@ -15,7 +15,9 @@ PONTO = "."
 FLOATS = DIGITOS + PONTO
 
 # caracteres usados em nomes de variáveis
-LETRAS  = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+SINAIS_DIACRITICOS = "àáâãåäéêèëíîìïóôòøõöúûùüçñý"
+LETRAS_GREGAS = 'αβγδεζηθικλμνξοπρσςτυφχψωϑ'
+LETRAS  = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + SINAIS_DIACRITICOS + SINAIS_DIACRITICOS.upper() + LETRAS_GREGAS + LETRAS_GREGAS.upper()
 
 # abre e fecha parenteses
 ABRE_FECHA_PARENTESES = "()"
@@ -29,6 +31,7 @@ NUMERO     = 2 # para números: todos são considerados float
 VARIAVEL   = 3 # para variáveis
 PARENTESES = 4 # para '(' e ')
 COLCHETES  = 5 # para '[' e ']'
+STRING     = 6 # para string
 
 # Whitespace characters: space, newline, horizontal tab,
 # vertical tab, form feed, carriage return
@@ -72,6 +75,7 @@ def tokeniza(exp):
     indice = 0
     string_atual = ''
     float_atual = ''
+
     while indice < len(exp):
 
         if exp[indice] in COMENTARIO:
