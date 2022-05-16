@@ -12,8 +12,10 @@ import operadores as op
 
 import readFile as rf
 
-PROMPT = "expressão >>> "
-QUIT = 3
+PROMPT = "\nopcao >>> "
+PROMPT2 = "\npath >>> "
+PROMPT3 = "\nexpressão >>> "
+QUIT = '3'
 
 # ------------------------------------------------------------
 
@@ -30,15 +32,15 @@ def main():
     '''
     opcao = 0
 
-    while int(opcao) != QUIT:
+    while opcao != QUIT:
         opcoes = ["\n1. Expressão a partir de arquivo",
                   "2. Escrever expressão", "3. Sair"]
-        print("Selecione uma opção:\n" + '\n'.join(str(o) for o in opcoes))
-        opcao = input(PROMPT)
+        print("\nSelecione uma opção:\n" + '\n'.join(str(o) for o in opcoes))
+        opcao = input(PROMPT).strip()
 
-        if int(opcao) == 1:
-            print("Entre com o path do arquivo ou tecle ENTER para encerrar.")
-            path = input(PROMPT)
+        if opcao == '1':
+            print("\nEntre com o path do arquivo")
+            path = input(PROMPT2)
             txt_arquivo = rf.lerArquivo(path)
             lista_tokens = tk.tokeniza(txt_arquivo)
 
@@ -58,9 +60,9 @@ def main():
 
                 # imprima a descriçao
                 print(descricao)
-        elif int(opcao) == 2:
-            print("Entre como uma expressão ou tecle apenas ENTER para encerrar.")
-            expressao = input(PROMPT)
+        elif opcao == '2':
+            print("\nEntre como uma expressão")
+            expressao = input(PROMPT3)
             lista_tokens = tk.tokeniza(expressao)
 
             for token in lista_tokens:
@@ -79,11 +81,11 @@ def main():
 
                 # imprima a descriçao
                 print(descricao)
-        elif int(opcao) == 3:
+        elif opcao == '3':
             pass
         else:
             opcao = input(
-                "Opção inválida, por favor selecione uma opção válida:\n" + PROMPT)
+                "Opção inválida, por favor selecione uma opção válida:\n" + PROMPT).strip()
 
 
 # -------------------------------------------
