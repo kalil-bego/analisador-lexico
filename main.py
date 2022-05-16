@@ -43,7 +43,7 @@ def main():
         if opcao == '1':
             print("\nEntre com o path do arquivo")
             path = input(PROMPT2)
-            if os.path.exists(path):
+            if os.path.isfile(path):
                 txt_arquivo = rf.lerArquivo(path)
                 lista_tokens = tk.tokeniza(txt_arquivo)
 
@@ -89,8 +89,7 @@ def main():
         elif opcao == '3':
             pass
         else:
-            opcao = input(
-                "Opção inválida, por favor selecione uma opção válida:\n" + PROMPT).strip()
+            print("\nOpção inválida, por favor selecione uma opção válida!")
 
 
 # -------------------------------------------
