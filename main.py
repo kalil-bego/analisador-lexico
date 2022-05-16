@@ -19,6 +19,25 @@ QUIT = '3'
 
 # ------------------------------------------------------------
 
+def tokenization(lista_tokens):
+    for token in lista_tokens:
+        # pegue item e tipo
+        item, tipo = token
+
+        # cri string com a descriçao
+        if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
+            descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
+        elif tipo == tk.VARIAVEL:
+            descricao = "'%s' : nome de variável" % item
+        elif tipo == tk.RESERVADO:
+            descricao = "'%s' : palavra reservada python" % item
+        elif tipo == tk.NUMERO:
+            descricao = "%f : constante float" % item
+        else:
+            descricao = "'%s' : categoria desconhecida" % item
+
+        # imprima a descriçao
+        print(descricao)
 
 def main():
     '''None -> None
@@ -44,43 +63,13 @@ def main():
             txt_arquivo = rf.lerArquivo(path)
             lista_tokens = tk.tokeniza(txt_arquivo)
 
-            for token in lista_tokens:
-                # pegue item e tipo
-                item, tipo = token
-
-                # cri string com a descriçao
-                if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
-                    descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
-                elif tipo == tk.VARIAVEL:
-                    descricao = "'%s' : nome de variável" % item
-                elif tipo == tk.NUMERO:
-                    descricao = "%f : constante float" % item
-                else:
-                    descricao = "'%s' : categoria desconhecida" % item
-
-                # imprima a descriçao
-                print(descricao)
+            tokenization(lista_tokens)
         elif opcao == '2':
             print("\nEntre como uma expressão")
             expressao = input(PROMPT3)
             lista_tokens = tk.tokeniza(expressao)
 
-            for token in lista_tokens:
-                # pegue item e tipo
-                item, tipo = token
-
-                # cri string com a descriçao
-                if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
-                    descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
-                elif tipo == tk.VARIAVEL:
-                    descricao = "'%s' : nome de variável" % item
-                elif tipo == tk.NUMERO:
-                    descricao = "%f : constante float" % item
-                else:
-                    descricao = "'%s' : categoria desconhecida" % item
-
-                # imprima a descriçao
-                print(descricao)
+            tokenization(lista_tokens)
         elif opcao == '3':
             pass
         else:

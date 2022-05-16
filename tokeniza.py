@@ -23,12 +23,18 @@ ABRE_FECHA_PARENTESES = "()"
 # abre e fecha colchetes
 ABRE_FECHA_COLCHETES = "[]"
 
+RESERVADOS = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def',
+ 'del', 'elif', 'else', 'except', 'False', 'finally', 'for', 'global', 'if',
+  'import', 'in', 'is', 'lambda','none','nonlocal','not','or','pass','raise',
+  'return','True','try','while','with','yield']
+
 # categorias
 OPERADOR   = 1 # para operadores aritméticos e atribuição
 NUMERO     = 2 # para números: todos são considerados float
 VARIAVEL   = 3 # para variáveis
 PARENTESES = 4 # para '(' e ')
 COLCHETES  = 5 # para '[' e ']'
+RESERVADO  = 6 # para palavras reservadas no python
 
 # Whitespace characters: space, newline, horizontal tab,
 # vertical tab, form feed, carriage return
@@ -107,7 +113,10 @@ def tokeniza(exp):
                     break
 
             if len(string_atual) > 0:
-                lista_tokens.append([string_atual, VARIAVEL])
+                if string_atual in RESERVADOS:
+                    lista_tokens.append([string_atual, RESERVADO])
+                else:
+                    lista_tokens.append([string_atual, VARIAVEL])
                 string_atual = ''
 
         if indice + 1 <= len(exp):
