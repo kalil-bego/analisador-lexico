@@ -84,7 +84,6 @@ def tokeniza(exp):
     indice = 0
     string_atual = ''
     float_atual = ''
-
     while indice < len(exp):
 
         if exp[indice] in COMENTARIO:
