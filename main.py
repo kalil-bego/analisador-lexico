@@ -4,6 +4,8 @@
    Este arquivo contem o programa principal do projeto.
 '''
 
+import os
+
 # tk.tokeniza(),
 import tokeniza as tk
 
@@ -19,6 +21,27 @@ QUIT = '3'
 
 # ------------------------------------------------------------
 
+def tokenization(lista_tokens):
+    for token in lista_tokens:
+        # pegue item e tipo
+        item, tipo = token
+
+        # cri string com a descriçao
+        if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
+            descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
+        elif tipo == tk.VARIAVEL:
+            descricao = "'%s' : nome de variável" % item
+        elif tipo == tk.RESERVADO:
+            descricao = "'%s' : palavra reservada python" % item
+        elif tipo == tk.STRING:
+            descricao = "'%s' : string" % item
+        elif tipo == tk.NUMERO:
+            descricao = "%f : constante float" % item
+        else:
+            descricao = "'%s' : categoria desconhecida" % item
+
+        # imprima a descriçao
+        print(descricao)
 
 def main():
     '''None -> None
@@ -41,53 +64,23 @@ def main():
         if opcao == '1':
             print("\nEntre com o path do arquivo")
             path = input(PROMPT2)
-            txt_arquivo = rf.lerArquivo(path)
-            lista_tokens = tk.tokeniza(txt_arquivo)
-
-            for token in lista_tokens:
-                # pegue item e tipo
-                item, tipo = token
-
-                # cri string com a descriçao
-                if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
-                    descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
-                elif tipo == tk.VARIAVEL:
-                    descricao = "'%s' : nome de variável" % item
-                elif tipo == tk.NUMERO:
-                    descricao = "%f : constante float" % item
-                else:
-                    descricao = "'%s' : categoria desconhecida" % item
-
-                # imprima a descriçao
-                print(descricao)
+            if os.path.isfile(path):
+                arquivo = rf.lerArquivo(path)
+                for linha in arquivo:
+                    lista_tokens = tk.tokeniza(linha)
+                    tokenization(lista_tokens)
+            else:
+                print("\nArquivo não encontrado!")
         elif opcao == '2':
             print("\nEntre como uma expressão")
             expressao = input(PROMPT3)
             lista_tokens = tk.tokeniza(expressao)
 
-            for token in lista_tokens:
-                # pegue item e tipo
-                item, tipo = token
-
-                # cri string com a descriçao
-                if tipo in [tk.OPERADOR, tk.PARENTESES, tk.COLCHETES]:
-                    descricao = "'%s' : %s" % (item, op.DESCRICAO[item])
-                elif tipo == tk.VARIAVEL:
-                    descricao = "'%s' : nome de variável" % item
-                elif tipo == tk.STRING:
-                    descricao = "'%s' : string" % item
-                elif tipo == tk.NUMERO:
-                    descricao = "%f : constante float" % item
-                else:
-                    descricao = "'%s' : categoria desconhecida" % item
-
-                # imprima a descriçao
-                print(descricao)
+            tokenization(lista_tokens)
         elif opcao == '3':
             pass
         else:
-            opcao = input(
-                "Opção inválida, por favor selecione uma opção válida:\n" + PROMPT).strip()
+            print("\nOpção inválida, por favor selecione uma opção válida!")
 
 
 # -------------------------------------------

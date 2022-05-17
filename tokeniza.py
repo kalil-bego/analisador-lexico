@@ -2,6 +2,7 @@
 # Constantes
 from lib2to3.pgen2.token import STRING
 import token
+from turtle import st
 
 
 TESTE   = False
@@ -19,7 +20,9 @@ PONTO = "."
 FLOATS = DIGITOS + PONTO
 
 # caracteres usados em nomes de variáveis
-LETRAS  = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+SINAIS_DIACRITICOS = "àáâãåäéêèëíîìïóôòøõöúûùüçñý"
+LETRAS_GREGAS = 'αβγδεζηθικλμνξοπρσςτυφχψωϑ'
+LETRAS  = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + SINAIS_DIACRITICOS + SINAIS_DIACRITICOS.upper() + LETRAS_GREGAS + LETRAS_GREGAS.upper()
 
 # abre e fecha parenteses
 ABRE_FECHA_PARENTESES = "()"
@@ -27,9 +30,14 @@ ABRE_FECHA_PARENTESES = "()"
 # abre e fecha colchetes
 ABRE_FECHA_COLCHETES = "[]"
 
-# aspas
-ASPAS_DUPLA = '"'
+RESERVADOS = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def',
+ 'del', 'elif', 'else', 'except', 'False', 'finally', 'for', 'global', 'if',
+  'import', 'in', 'is', 'lambda','none','nonlocal','not','or','pass','raise',
+  'return','True','try','while','with','yield']
+
 ASPAS_SIMPLES = "'"
+
+ASPAS_DUPLA = '"'
 
 # categorias
 OPERADOR   = 1 # para operadores aritméticos e atribuição
@@ -37,7 +45,8 @@ NUMERO     = 2 # para números: todos são considerados float
 VARIAVEL   = 3 # para variáveis
 PARENTESES = 4 # para '(' e ')
 COLCHETES  = 5 # para '[' e ']'
-STRING     = 6 # para '"'e "'"
+RESERVADO  = 6 # para palavras reservadas no python
+STRING     = 7 # para string
 
 # Whitespace characters: space, newline, horizontal tab,
 # vertical tab, form feed, carriage return
@@ -81,8 +90,6 @@ def tokeniza(exp):
     indice = 0
     string_atual = ''
     float_atual = ''
-    start_index_string = 0
-    end_index_string = 0
     while indice < len(exp):
 
         if exp[indice] in COMENTARIO:
@@ -109,19 +116,20 @@ def tokeniza(exp):
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
 
-        elif exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA or exp[indice]:
-            if start_index_string is 0:
-                start_index_string = indice
-            if end_index_string is 0:
-                end_index_string = indice
-                string_atual = exp[start_index_string:end_index_string]
-            
-            if len(string_atual) > 0:
-                lista_tokens.append([string_atual, STRING])
-                string_atual = ''
-                break
+        elif exp[indice + 1] in ASPAS_SIMPLES or exp[indice + 1] in ASPAS_DUPLA:
+            while indice < len(exp):
+                string = ''
+                while exp[indice] not in ASPAS_SIMPLES or exp[indice] not in ASPAS_DUPLA:
+                    if exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
+                        break
+                    string += exp[indice]
+                    indice += 1
+                indice += 1
 
-        elif exp[indice] in LETRAS or exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA or exp[indice]:
+                if len(string) > 1:
+                    lista_tokens.append([string, STRING])
+
+        elif exp[indice] in LETRAS:
             while indice < len(exp):
                 if exp[indice] in DIGITOS or exp[indice] in LETRAS:
                     string_atual += exp[indice]
@@ -130,7 +138,10 @@ def tokeniza(exp):
                     break
 
             if len(string_atual) > 0:
-                lista_tokens.append([string_atual, VARIAVEL])
+                if string_atual in RESERVADOS:
+                    lista_tokens.append([string_atual, RESERVADO])
+                else:
+                    lista_tokens.append([string_atual, VARIAVEL])
                 string_atual = ''
 
         if indice + 1 <= len(exp):
