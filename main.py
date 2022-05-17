@@ -60,10 +60,10 @@ def main():
         if opcao == '1':
             print("\nEntre com o path do arquivo")
             path = input(PROMPT2)
-            txt_arquivo = rf.lerArquivo(path)
-            lista_tokens = tk.tokeniza(txt_arquivo)
-
-            tokenization(lista_tokens)
+            arquivo = rf.lerArquivo(path)
+            for linha in arquivo:
+                lista_tokens = tk.tokeniza(linha)
+                tokenization(lista_tokens)
         elif opcao == '2':
             print("\nEntre como uma expressão")
             expressao = input(PROMPT3)
