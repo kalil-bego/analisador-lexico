@@ -33,8 +33,6 @@ def tokenization(lista_tokens):
             descricao = "'%s' : nome de variável" % item
         elif tipo == tk.RESERVADO:
             descricao = "'%s' : palavra reservada python" % item
-        elif tipo == tk.STRING:
-            descricao = "'%s' : string" % item
         elif tipo == tk.NUMERO:
             descricao = "%f : constante float" % item
         else:

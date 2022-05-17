@@ -2,7 +2,6 @@
 # Constantes
 from lib2to3.pgen2.token import STRING
 import token
-from turtle import st
 
 
 TESTE   = False
@@ -35,10 +34,6 @@ RESERVADOS = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def',
   'import', 'in', 'is', 'lambda','none','nonlocal','not','or','pass','raise',
   'return','True','try','while','with','yield']
 
-ASPAS_SIMPLES = "'"
-
-ASPAS_DUPLA = '"'
-
 # categorias
 OPERADOR   = 1 # para operadores aritméticos e atribuição
 NUMERO     = 2 # para números: todos são considerados float
@@ -46,7 +41,6 @@ VARIAVEL   = 3 # para variáveis
 PARENTESES = 4 # para '(' e ')
 COLCHETES  = 5 # para '[' e ']'
 RESERVADO  = 6 # para palavras reservadas no python
-STRING     = 7 # para string
 
 # Whitespace characters: space, newline, horizontal tab,
 # vertical tab, form feed, carriage return
@@ -115,20 +109,7 @@ def tokeniza(exp):
             if len(float_atual) > 0:
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
-
-        elif exp[indice + 1] in ASPAS_SIMPLES or exp[indice + 1] in ASPAS_DUPLA:
-            while indice < len(exp):
-                string = ''
-                while exp[indice] not in ASPAS_SIMPLES or exp[indice] not in ASPAS_DUPLA:
-                    if exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
-                        break
-                    string += exp[indice]
-                    indice += 1
-                indice += 1
-
-                if len(string) > 1:
-                    lista_tokens.append([string, STRING])
-
+        
         elif exp[indice] in LETRAS:
             while indice < len(exp):
                 if exp[indice] in DIGITOS or exp[indice] in LETRAS:
