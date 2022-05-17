@@ -4,6 +4,8 @@
    Este arquivo contem o programa principal do projeto.
 '''
 
+import os
+
 # tk.tokeniza(),
 import tokeniza as tk
 
@@ -60,10 +62,13 @@ def main():
         if opcao == '1':
             print("\nEntre com o path do arquivo")
             path = input(PROMPT2)
-            arquivo = rf.lerArquivo(path)
-            for linha in arquivo:
-                lista_tokens = tk.tokeniza(linha)
-                tokenization(lista_tokens)
+            if os.path.isfile(path):
+                arquivo = rf.lerArquivo(path)
+                for linha in arquivo:
+                    lista_tokens = tk.tokeniza(linha)
+                    tokenization(lista_tokens)
+            else:
+                print("\nArquivo não encontrado!")
         elif opcao == '2':
             print("\nEntre como uma expressão")
             expressao = input(PROMPT3)
@@ -73,8 +78,7 @@ def main():
         elif opcao == '3':
             pass
         else:
-            opcao = input(
-                "Opção inválida, por favor selecione uma opção válida:\n" + PROMPT).strip()
+            print("\nOpção inválida, por favor selecione uma opção válida!")
 
 
 # -------------------------------------------
