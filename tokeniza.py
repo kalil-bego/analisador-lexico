@@ -1,8 +1,8 @@
 
 # Constantes
 from lib2to3.pgen2.token import STRING
+from textwrap import indent
 import token
-from turtle import st
 
 
 TESTE   = False
@@ -116,18 +116,19 @@ def tokeniza(exp):
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
 
-        elif exp[indice + 1] in ASPAS_SIMPLES or exp[indice + 1] in ASPAS_DUPLA:
+        elif exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
             while indice < len(exp):
                 string = ''
+                indice += 1
                 while exp[indice] not in ASPAS_SIMPLES or exp[indice] not in ASPAS_DUPLA:
                     if exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
                         break
                     string += exp[indice]
                     indice += 1
-                indice += 1
 
                 if len(string) > 1:
                     lista_tokens.append([string, STRING])
+                    break
 
         elif exp[indice] in LETRAS:
             while indice < len(exp):
