@@ -67,12 +67,6 @@ def tokeniza(exp):
 
         elif exp[indice] in OPERADORES:
             lista_tokens.append([exp[indice], OPERADOR])
-        
-        elif exp[indice] in ABRE_FECHA_PARENTESES:
-            lista_tokens.append([exp[indice], PARENTESES])
-
-        elif exp[indice] in ABRE_FECHA_COLCHETES:
-            lista_tokens.append([exp[indice], COLCHETES])
 
         elif exp[indice] in DIGITOS:
             while indice < len(exp):
@@ -115,6 +109,12 @@ def tokeniza(exp):
                 else:
                     lista_tokens.append([string_atual, VARIAVEL])
                 string_atual = ''
+
+        if exp[indice] in ABRE_FECHA_PARENTESES:
+            lista_tokens.append([exp[indice], PARENTESES])
+
+        if exp[indice] in ABRE_FECHA_COLCHETES:
+            lista_tokens.append([exp[indice], COLCHETES])
 
         if indice + 1 <= len(exp):
             indice += 1
