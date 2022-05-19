@@ -2,7 +2,6 @@
 # Constantes
 from lib2to3.pgen2.token import STRING
 from textwrap import indent
-import token
 
 
 TESTE   = False
@@ -35,8 +34,6 @@ RESERVADOS = ['and', 'as', 'assert', 'break', 'class', 'continue', 'def',
   'import', 'in', 'is', 'lambda','none','nonlocal','not','or','pass','raise',
   'return','True','try','while','with','yield']
 
-ASPAS_SIMPLES = "'"
-
 ASPAS_DUPLA = '"'
 
 # categorias
@@ -58,33 +55,6 @@ COMENTARIO = "#"
 
 #------------------------------------------------------------
 def tokeniza(exp):
-    """(str) -> list
-
-    Recebe uma string exp representando uma expressão e cria 
-    e retorna uma lista com os itens léxicos que formam a
-    expressão.
-
-    Cada item léxico (= token) é da forma
-       
-        [item, tipo]
-
-    O componente item de um token é 
-
-        - um float: no caso do item ser um número; ou 
-        - um string no caso do item ser um operador ou 
-             uma variável ou um abre/fecha parenteses.
-
-    O componente tipo de um token indica a sua categoria
-    (ver definição de constantes acima). 
-
-        - OPERADOR;
-        - NUMERO; 
-        - VARIAVEL; ou 
-        - PARENTESES
-
-    A funçao ignora tuo que esta na exp apos o caractere
-    COMENTARIO (= "#").
-    """
     # escreva o seu código abaixo
     lista_tokens = []
     indice = 0
@@ -116,17 +86,18 @@ def tokeniza(exp):
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
 
-        elif exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
+        elif exp[indice] in ASPAS_DUPLA:
             while indice < len(exp):
                 string = ''
                 indice += 1
-                while exp[indice] not in ASPAS_SIMPLES or exp[indice] not in ASPAS_DUPLA:
-                    if exp[indice] in ASPAS_SIMPLES or exp[indice] in ASPAS_DUPLA:
+                while exp[indice] not in ASPAS_DUPLA:
+                    if exp[indice] in ASPAS_DUPLA:
                         break
-                    string += exp[indice]
-                    indice += 1
+                    else:
+                        string += exp[indice]
+                        indice += 1
 
-                if len(string) > 1:
+                if len(string) > 0:
                     lista_tokens.append([string, STRING])
                     break
 

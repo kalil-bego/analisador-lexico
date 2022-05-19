@@ -1,9 +1,3 @@
-'''
-   NÃO MODIFIQUE ESTE ARQUIVO - autor MAC0122
-
-   Este arquivo contem o programa principal do projeto.
-'''
-
 import os
 
 # tk.tokeniza(),
@@ -14,10 +8,10 @@ import operadores as op
 
 import readFile as rf
 
-PROMPT = "\nopcao >>> "
+PROMPT  = "\nopcao >>> "
 PROMPT2 = "\npath >>> "
 PROMPT3 = "\nexpressão >>> "
-QUIT = '3'
+QUIT    = "3"
 
 # ------------------------------------------------------------
 
@@ -36,7 +30,7 @@ def tokenization(lista_tokens):
         elif tipo == tk.STRING:
             descricao = "'%s' : string" % item
         elif tipo == tk.NUMERO:
-            descricao = "%f : constante float" % item
+            descricao = "'%f' : constante float" % item
         else:
             descricao = "'%s' : categoria desconhecida" % item
 
@@ -44,15 +38,6 @@ def tokenization(lista_tokens):
         print(descricao)
 
 def main():
-    '''None -> None
-
-    Programa que lê do teclado uma expressão aritmética
-    e imprime cada item léxico na expressão.
-
-    Exemplos:
-
-
-    '''
     opcao = 0
 
     while opcao != QUIT:
