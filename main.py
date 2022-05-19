@@ -46,7 +46,7 @@ def main():
         print("\nSelecione uma opção:\n" + '\n'.join(str(o) for o in opcoes))
         opcao = input(PROMPT).strip()
 
-        if opcao == '1':
+        if opcao == "1":
             print("\nEntre com o path do arquivo")
             path = input(PROMPT2)
             if os.path.isfile(path):
@@ -56,13 +56,13 @@ def main():
                     tokenization(lista_tokens)
             else:
                 print("\nArquivo não encontrado!")
-        elif opcao == '2':
+        elif opcao == "2":
             print("\nEntre como uma expressão")
             expressao = input(PROMPT3)
             lista_tokens = tk.tokeniza(expressao)
 
             tokenization(lista_tokens)
-        elif opcao == '3':
+        elif opcao == "3":
             pass
         else:
             print("\nOpção inválida, por favor selecione uma opção válida!")
