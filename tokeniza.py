@@ -79,6 +79,8 @@ def tokeniza(exp):
             if len(float_atual) > 0:
                 lista_tokens.append([float(float_atual), NUMERO])
                 float_atual = ''
+                indice -= 1
+            
 
         elif exp[indice] in ASPAS_DUPLA:
             while indice < len(exp):
@@ -109,14 +111,15 @@ def tokeniza(exp):
                 else:
                     lista_tokens.append([string_atual, VARIAVEL])
                 string_atual = ''
+                indice -= 1
 
-        if exp[indice] in ABRE_FECHA_PARENTESES:
+        elif exp[indice] in ABRE_FECHA_PARENTESES:
             lista_tokens.append([exp[indice], PARENTESES])
 
-        if exp[indice] in ABRE_FECHA_COLCHETES:
+        elif exp[indice] in ABRE_FECHA_COLCHETES:
             lista_tokens.append([exp[indice], COLCHETES])
 
-        if indice + 1 <= len(exp):
+        if indice <= len(exp):
             indice += 1
 
     return lista_tokens
